@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-
+import "./src/database/index.js";
 //configure the app to use the .env file
 dotenv.config();
 // this is my app, basically this app const will contain all the express functions
