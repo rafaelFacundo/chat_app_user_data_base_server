@@ -1,7 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 import "./src/database/index.js";
-import USER_ROUTER from "./src/routes/userRoutes.js";
+import userRouter from "./src/routes/userRoutes.js";
 
 //configure the app to use the .env file
 dotenv.config();
@@ -10,12 +11,10 @@ dotenv.config();
 // in other words it's my express app
 const app = express();
 const API_ENTRY_POINT = process.env.SERVER_BASE_URL;
+console.log(API_ENTRY_POINT);
 app.use(express.json());
-app.use(API_ENTRY_POINT, USER_ROUTER);
-
-app.get("/", (req, res) => {
-  res.send("HELLO ");
-});
+app.use(cors());
+app.use(API_ENTRY_POINT, userRouter);
 
 app.listen(process.env.SERVER_PORT, () => {
   console.log("THE SERVER IS ON");

@@ -4,6 +4,7 @@ import { encryptPassword, comparePasswords } from "../utils/security.js";
 
 // controller to create a new user
 export const createNewUser = async (req, res) => {
+  console.log("CREATE USER REQUESTs");
   // the username and the password received from the request
   // to create a new user
   const { NEW_USER_NAME, NEW_USER_PASSWORD } = req.body;
@@ -13,6 +14,7 @@ export const createNewUser = async (req, res) => {
   try {
     // encrypting password
     const encryptedPassword = await encryptPassword(NEW_USER_PASSWORD);
+    console.log(1);
     // creating new user
     // if the new user try to create an account with a username that
     // already exists it will throw an error that will be catch
@@ -20,12 +22,17 @@ export const createNewUser = async (req, res) => {
     const newUser = await User.create({
       username: NEW_USER_NAME,
       password: encryptedPassword,
+      is_active: true,
     });
     // creating the return user
     const userToReturn = { id: newUser.id, username: newUser.username };
+    console.log(2);
+
     // finishing the transaction
     newUserTransaction.commit();
     // returning the response to the request
+    console.log(3);
+
     return res
       .status(200)
       .json({ message: "USER SUCESSFULLY CREATED", data: userToReturn });
